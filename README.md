@@ -13,7 +13,7 @@ npm run tauri dev
 
 Проверка и сборка frontend отдельно: `npm run build`. Полная desktop-сборка: `npm run tauri build`.
 
-Для тестирования Windows-сборки откройте PowerShell в папке проекта и выполните `npm ci`, затем `npm run tauri build`. Установщик появится в `src-tauri/target/release/bundle/nsis` (EXE) и `src-tauri/target/release/bundle/msi` (MSI). Приложение пишет журнал в `%APPDATA%\com.example.atlas-storyboard\logs\atlas.log`.
+Для тестирования Windows-сборки откройте PowerShell в папке проекта и выполните `npm ci`, затем `npm run tauri build`. Установщик появится в `src-tauri/target/release/bundle/nsis` (EXE) и `src-tauri/target/release/bundle/msi` (MSI). Приложение пишет журнал в `%LOCALAPPDATA%\com.example.atlas-storyboard\logs\atlas.log`.
 
 ## Данные, фотографии и видео
 
