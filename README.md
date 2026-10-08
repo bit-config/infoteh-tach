@@ -51,7 +51,7 @@ npm run tauri dev
 
 ## Сборка на GitHub
 
-Workflow `.github/workflows/build.yml` запускается при каждом `push`, собирает Windows-приложение и сохраняет `.exe` и `.msi` в **GitHub → Actions → запуск → Artifacts**; он хранит три последних артефакта (срок хранения каждого — 90 дней). Workflow `.github/workflows/release.yml` при push в `main` автоматически выпускает подписанный GitHub Release с версией `0.1.<номер сборки>` и установщиками. Он хранит три последних релиза.
+Workflow `.github/workflows/release.yml` при push в `main` автоматически собирает Windows-установщики и публикует подписанный GitHub Release с версией `0.1.<номер сборки>`. Установщики для скачивания и файлы для автообновления публикуются в Release; сохраняется только последний Release.
 
 Для подписи обновлений в GitHub откройте **Settings → Secrets and variables → Actions → New repository secret** и добавьте `TAURI_SIGNING_PRIVATE_KEY` со значением приватного ключа Tauri Updater. Для ключа без пароля `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` не нужен; если у ключа есть пароль, добавьте и этот секрет. В конфигурации приложения хранится соответствующий публичный ключ, а updater проверяет подпись перед установкой. Репозиторий и Releases должны быть публичными, так как приложение загружает `latest.json` без GitHub-токена.
 

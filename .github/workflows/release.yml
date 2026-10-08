@@ -57,7 +57,7 @@ jobs:
           releaseDraft: false
           prerelease: false
 
-      - name: Keep only the three latest releases
+      - name: Keep only the latest release
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
@@ -65,7 +65,7 @@ jobs:
           gh api --paginate "repos/${GITHUB_REPOSITORY}/releases?per_page=100" \
             --jq '.[] | select(.draft == false and .prerelease == false and (.tag_name | startswith("v0.1."))) | [.id, .tag_name, .created_at] | @tsv' \
             | sort -k3,3r \
-            | tail -n +4 \
+            | tail -n +2 \
             | while IFS=$'\t' read -r release_id tag_name created_at; do
                 gh api --method DELETE "repos/${GITHUB_REPOSITORY}/releases/${release_id}"
                 gh api --method DELETE "repos/${GITHUB_REPOSITORY}/git/refs/tags/${tag_name}"
