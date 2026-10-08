@@ -13,6 +13,8 @@ npm run tauri dev
 
 Проверка и сборка frontend отдельно: `npm run build`. Полная desktop-сборка: `npm run tauri build`.
 
+Для тестирования Windows-сборки откройте PowerShell в папке проекта и выполните `npm ci`, затем `npm run tauri build`. Установщик появится в `src-tauri/target/release/bundle/nsis` (EXE) и `src-tauri/target/release/bundle/msi` (MSI). Приложение пишет журнал в `%APPDATA%\com.example.atlas-storyboard\logs\atlas.log`.
+
 ## Данные, фотографии и видео
 
 Основной редактируемый файл — `public/data/map.json`. Медиафайлы храните в `public/images` (или в другой папке внутри `public`). В JSON указывайте URL от корня приложения: файл `public/images/place.jpg` указывается как `/images/place.jpg`. Для изображений карточки и историй предусмотрен автоматический поиск по общему имени: если путь `/images/place.svg` не загрузился, приложение последовательно проверит `/images/place.png`, `.jpg`, `.jpeg` и `.webp`. Поэтому можно оставить в JSON путь с `.svg`, даже если файл места фактически PNG или JPG; достаточно положить изображение с тем же именем и другим расширением. JSON загружается при запуске; встроенная копия в `src/data/map.json` используется как запасной вариант.
