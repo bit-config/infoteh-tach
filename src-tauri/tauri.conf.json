@@ -25,12 +25,21 @@
         "focus": true
       }
     ],
-    "security": { "csp": null }
+    "security": {
+      "csp": null
+    }
   },
   "bundle": {
     "active": true,
-    "targets": ["nsis", "msi"],
-    "icon": ["icons/icon.png", "icons/icon.ico", "icons/icon.icns"]
+    "targets": [
+      "nsis",
+      "msi"
+    ],
+    "icon": [
+      "icons/icon.png",
+      "icons/icon.ico",
+      "icons/icon.icns"
+    ]
   },
   "plugins": {
     "updater": {
@@ -39,7 +48,7 @@
         {
           "url": "https://github.com/REPLACE_OWNER/REPLACE_REPO/releases/latest/download/latest.json",
           "headers": {
-            "Authorization": "Bearer REPLACE_WITH_READ_ONLY_GITHUB_TOKEN"
+            "Authorization": "Bearer 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"
           }
         }
       ]
