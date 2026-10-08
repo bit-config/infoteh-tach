@@ -1,0 +1,18 @@
+[package]
+name = "atlas-storyboard"
+version = "0.1.0"
+description = "Интерактивная карта историй и мест"
+authors = ["you"]
+edition = "2021"
+
+[lib]
+name = "atlas_storyboard_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-updater = "2"
+tauri-plugin-process = "2"

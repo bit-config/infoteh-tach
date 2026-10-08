@@ -1,0 +1,2 @@
+.update-button{border:0;background:transparent;color:#727b71;font:8px 'DM Mono',monospace;letter-spacing:.07em;display:flex;align-items:center;gap:5px;cursor:pointer}.update-button:hover{color:#25312c}.update-toast{max-width:min(90vw,540px);white-space:normal}.update-toast button{flex:none;border:0;background:none;color:inherit;display:flex;cursor:pointer}
+@media(max-width:760px){.update-button{font-size:7px}.footer{gap:8px}}
