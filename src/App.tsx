@@ -7,6 +7,7 @@ import type { MapData, MapItem, StoryBlock } from "./types";
 
 const data = mapData as MapData;
 const imageExtensions = ["svg", "png", "jpg", "jpeg", "webp"];
+const updateToken = import.meta.env.VITE_GITHUB_UPDATE_TOKEN;
 
 function getImageCandidates(src: string) {
   const match = src.match(/^(.*)\.(svg|png|jpe?g|webp)([?#].*)?$/i);
@@ -51,12 +52,13 @@ function App() {
       if (checking || disposed) return;
       checking = true;
       try {
-        const update = await check();
+        const headers = updateToken ? { Authorization: `Bearer ${updateToken}` } : undefined;
+        const update = await check(headers ? { headers } : undefined);
         if (!update || disposed) return;
-        await update.downloadAndInstall();
+        await update.downloadAndInstall(undefined, headers ? { headers } : undefined);
         if (!disposed) await relaunch();
-      } catch {
-        // Keep kiosk operation quiet if the network or update server is unavailable.
+      } catch (error) {
+        console.error("Не удалось проверить или установить обновление:", error);
       } finally {
         checking = false;
       }

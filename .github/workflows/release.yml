@@ -1,8 +1,10 @@
-name: Publish Windows release
+name: Build and publish Windows release
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - master
   workflow_dispatch:
 
 permissions:
@@ -15,58 +17,35 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20
           cache: npm
 
-      - name: Install Rust
+      - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Install frontend dependencies
+      - name: Install dependencies
         run: npm ci
 
-      - name: Set unique release version
-        shell: bash
+      - name: Generate release version
+        run: node scripts/set-build-version.mjs
         env:
-          APP_VERSION: 0.1.${{ github.run_number }}
-        run: |
-          node -e 'const fs=require("node:fs"); const version=process.env.APP_VERSION; const configPath="src-tauri/tauri.conf.json"; const config=JSON.parse(fs.readFileSync(configPath,"utf8")); config.version=version; fs.writeFileSync(configPath, JSON.stringify(config,null,2)+"\n"); const cargoPath="src-tauri/Cargo.toml"; const cargo=fs.readFileSync(cargoPath,"utf8").replace(/^(version\s*=\s*)"[^"]+"/m, `$1"${version}"`); fs.writeFileSync(cargoPath,cargo);'
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+          GITHUB_RUN_ATTEMPT: ${{ github.run_attempt }}
 
-      - name: Check updater signing secret
-        shell: bash
-        env:
-          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
-        run: |
-          if [ -z "$TAURI_SIGNING_PRIVATE_KEY" ]; then
-            echo "Add TAURI_SIGNING_PRIVATE_KEY to repository Actions secrets."
-            exit 1
-          fi
-
-      - name: Build and publish signed release
+      - name: Build and publish release
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VITE_GITHUB_UPDATE_TOKEN: ${{ secrets.VITE_GITHUB_UPDATE_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
-          tagName: v0.1.${{ github.run_number }}
-          releaseName: Atlas 0.1.${{ github.run_number }}
-          releaseBody: "Автоматическая сборка Atlas из коммита ${{ github.sha }}."
+          tagName: v__VERSION__
+          releaseName: "Atlas v__VERSION__"
+          releaseBody: "See the assets below to download and install this version."
           releaseDraft: false
           prerelease: false
-
-      - name: Keep only the latest release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          gh api --paginate "repos/${GITHUB_REPOSITORY}/releases?per_page=100" \
-            --jq '.[] | select(.draft == false and .prerelease == false and (.tag_name | startswith("v0.1."))) | [.id, .tag_name, .created_at] | @tsv' \
-            | sort -k3,3r \
-            | tail -n +2 \
-            | while IFS=$'\t' read -r release_id tag_name created_at; do
-                gh api --method DELETE "repos/${GITHUB_REPOSITORY}/releases/${release_id}"
-                gh api --method DELETE "repos/${GITHUB_REPOSITORY}/git/refs/tags/${tag_name}"
-              done
+          includeUpdaterJson: true

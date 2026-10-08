@@ -1,6 +1,6 @@
 [package]
 name = "atlas-storyboard"
-version = "0.1.0"
+version = "0.1.1"
 description = "Интерактивная карта историй и мест"
 authors = ["you"]
 edition = "2021"
