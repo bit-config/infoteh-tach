@@ -16,7 +16,7 @@
         { "type": "text", "content": "Маленький тропический мир посреди города.", "style": "lead" },
         { "type": "image", "src": "/images/greenhouse.svg", "caption": "Утро в старой оранжерее" },
         { "type": "text", "content": "Внутри всегда немного теплее, чем снаружи. На запотевших стёклах собираются капли, а огромные листья тянутся к свету. Здесь приятно замедлиться и просто послушать, как шумят растения." },
-        { "type": "gallery", "images": [{ "src": "/images/leaf.svg", "caption": "Папоротник" }, { "src": "/images/flowers.svg", "caption": "Цветы в лучах солнца" }] },
+        { "type": "gallery", "images": [{ "src": "/images/leaf.svg", "caption": "Папоротник" }, { "src": "/images/flowers.svg", "caption": "Цветы в лучах солнца" }, { "src": "/images/greenhouse.svg", "caption": "Тропические растения" }, { "src": "/images/river.svg", "caption": "Отражения на воде" }, { "src": "/images/pier.svg", "caption": "Дорожка в саду" }] },
         { "type": "text", "content": "Лучшее время для прогулки — будний день до полудня." }
       ]
     },
