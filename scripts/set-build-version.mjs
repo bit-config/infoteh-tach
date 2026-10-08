@@ -27,7 +27,7 @@ const cargoToml = await readFile("src-tauri/Cargo.toml", "utf8");
 await writeFile("src-tauri/Cargo.toml", cargoToml.replace(/^(version\s*=\s*)"[^"]+"/m, `$1"${version}"`));
 
 const cargoLock = await readFile("src-tauri/Cargo.lock", "utf8");
-const packageEntry = /(\[\[package\]\]\nname = "atlas-storyboard"\nversion = ")[^"]+(\")/;
+const packageEntry = /(\[\[package\]\]\r?\nname = "atlas-storyboard"\r?\nversion = ")[^"]+(\")/;
 if (!packageEntry.test(cargoLock)) throw new Error("Could not find atlas-storyboard in Cargo.lock.");
 await writeFile("src-tauri/Cargo.lock", cargoLock.replace(packageEntry, `$1${version}$2`));
 
