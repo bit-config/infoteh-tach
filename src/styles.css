@@ -9,20 +9,28 @@
 }
 
 .map-section {
+    position: relative;
     flex: 1;
     min-height: 0;
-    display: flex;
-    flex-direction: column
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: #e9e8de
 }
 
 .map-toolbar {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    right: 0;
     flex: none
 }
 
 .map-canvas {
-    height: auto;
-    min-height: 0;
-    flex: 1
+    width: min(100vw, 177.7778dvh);
+    height: min(100%, 56.25vw);
+    aspect-ratio: 16 / 9
 }
 
 @media(max-width:760px) {
@@ -37,8 +45,10 @@
 }
 
 .zoom-image-button {
+    position: relative;
     display: block;
     width: 100%;
+    overflow: hidden;
     padding: 0;
     border: 0;
     background: none;
@@ -47,6 +57,44 @@
 
 .zoom-image-button img {
     display: block
+}
+
+.media-action-icon {
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    right: 10px;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #ffffffa6;
+    border-radius: 50%;
+    background: #f5f4f0e8;
+    color: #344438;
+    box-shadow: 0 2px 8px #1c2b2230;
+    pointer-events: none
+}
+
+.video-thumbnail video {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 440px;
+    background: #202720;
+    object-fit: contain
+}
+
+.video-play-icon {
+    top: 50%;
+    right: auto;
+    left: 50%;
+    width: 54px;
+    height: 54px;
+    transform: translate(-50%, -50%);
+    border: 1px solid #ffffffc2;
+    cursor: pointer;
+    pointer-events: auto
 }
 
 .image-lightbox {
@@ -58,7 +106,8 @@
     align-items: center;
     justify-content: center;
     padding: 32px;
-    cursor: zoom-out
+    cursor: zoom-out;
+    animation: modal-backdrop-in .28s ease-out both
 }
 
 .image-lightbox>img {
@@ -66,7 +115,20 @@
     max-height: 100%;
     object-fit: contain;
     box-shadow: 0 12px 50px #0006;
-    cursor: default
+    cursor: default;
+    animation: modal-content-in .38s cubic-bezier(.2, .75, .25, 1) both
+}
+
+.image-lightbox>.lightbox-video {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    background: #101612;
+    box-shadow: 0 12px 50px #0006;
+    cursor: default;
+    animation: modal-content-in .38s cubic-bezier(.2, .75, .25, 1) both
 }
 
 .lightbox-close {
@@ -130,12 +192,12 @@
 }
 
 .story-gallery .zoom-image-button,
-.story-gallery video {
+.story-gallery .video-thumbnail {
     width: 100%
 }
 
 .story-gallery .zoom-image-button img,
-.story-gallery video {
+.story-gallery .video-thumbnail video {
     height: auto;
     max-height: 440px;
     object-fit: cover;
@@ -182,7 +244,8 @@
 
 body {
     margin: 0;
-    min-width: 360px
+    min-width: 360px;
+    min-height: 100vh
 }
 
 button,
@@ -195,9 +258,15 @@ button {
 }
 
 .app-shell {
-    max-width: 1600px;
-    margin: auto;
-    padding: 0 7.1%
+    width: 100%;
+    max-width: none;
+    height: 100vh;
+    height: 100dvh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden
 }
 
 .topbar {
@@ -360,6 +429,7 @@ button {
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid var(--line);
+    padding: 0 24px;
     color: #525d54
 }
 
@@ -406,13 +476,14 @@ button {
 }
 
 .map-canvas {
-    height: min(55vw, 540px);
-    min-height: 410px;
+    width: min(100vw, 177.7778dvh);
+    height: min(100%, 56.25vw);
+    aspect-ratio: 16 / 9;
     position: relative;
     background-size: cover;
     background-position: center;
     overflow: hidden;
-    border: 1px solid #d7d8cf;
+    border: 0;
     background-color: #e9e8de
 }
 
@@ -456,16 +527,44 @@ button {
     text-align: left;
     background: transparent;
     cursor: pointer;
-    transform: translate(-50%, -50%);
-    animation: card-in .65s both;
-    animation-delay: var(--card-delay);
-    transition: transform .25s ease, filter .25s ease
+    transform: translate(50%, -50%);
+    transition: transform .25s ease, filter .25s ease;
+    filter: drop-shadow(0 5px 9px #263c3024)
+}
+
+@property --marker-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg
+}
+
+.map-card::before {
+    content: '';
+    position: absolute;
+    z-index: 3;
+    inset: -4px;
+    padding: 2px;
+    border-radius: 10px;
+    background: conic-gradient(from var(--marker-angle), transparent 0deg 265deg, #ffffffb8 295deg, #b9e5a9 320deg, #6f9f71 342deg, transparent 360deg);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: .9;
+    animation: marker-orbit 5s linear infinite
 }
 
 .map-card:hover,
 .map-card-active {
-    transform: translate(-50%, -52%);
-    filter: drop-shadow(0 8px 10px #38473c2b)
+    transform: translate(50%, -52%);
+    filter: drop-shadow(0 8px 13px #263c3045)
+}
+
+.map-card:hover::before,
+.map-card-active::before {
+    opacity: 1;
+    filter: drop-shadow(0 0 5px #b9e5a988)
 }
 
 .card-image-wrap {
@@ -474,8 +573,11 @@ button {
     display: block;
     position: relative;
     overflow: hidden;
+    border-radius: 3px;
     background: #d7ddcf;
-    box-shadow: 0 3px 12px #33443517
+    box-shadow: 0 3px 12px #33443517;
+    animation: card-image-in .55s both;
+    animation-delay: var(--card-delay)
 }
 
 .card-image-wrap>img {
@@ -523,9 +625,12 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0 5px;
-    color: #738074;
-    font-size: 8px
+    padding: 7px 8px 5px;
+    color: #536354;
+    font-size: 8px;
+    background: #fbfaf0e8;
+    animation: card-caption-in .45s both;
+    animation-delay: calc(var(--card-delay) + 120ms)
 }
 
 .card-pin {
@@ -533,10 +638,15 @@ button {
 }
 
 .card-title {
+    display: block;
     font-family: 'Playfair Display', serif;
     font-size: 20px;
     letter-spacing: -.03em;
-    line-height: 1.1
+    line-height: 1.1;
+    padding: 4px 8px 7px;
+    background: #fbfaf0e8;
+    animation: card-caption-in .45s both;
+    animation-delay: calc(var(--card-delay) + 120ms)
 }
 
 .map-compass {
@@ -716,8 +826,8 @@ button {
     background: #18221d66;
     opacity: 0;
     visibility: hidden;
-    transition: opacity .35s, visibility .35s;
-    backdrop-filter: blur(2px)
+    transition: opacity .35s ease, visibility .35s;
+    backdrop-filter: none
 }
 
 .drawer-backdrop.is-visible {
@@ -733,15 +843,25 @@ button {
     bottom: 0;
     width: min(530px, 100vw);
     background: var(--paper);
-    box-shadow: -20px 0 60px #1e2a241a;
-    transform: translateX(102%);
-    transition: transform .48s cubic-bezier(.22, .75, .22, 1);
+    box-shadow: -16px 0 44px #1e2a241a;
+    transform: translate3d(102%, 0, 0);
+    transition: transform .7s cubic-bezier(.16, 1, .3, 1);
+    will-change: transform;
+    backface-visibility: hidden;
     display: flex;
     flex-direction: column
 }
 
 .story-drawer.is-open {
-    transform: translateX(0)
+    transform: translate3d(0, 0, 0)
+}
+
+.story-drawer.is-open .drawer-top {
+    animation: modal-content-in .42s .12s cubic-bezier(.2, .75, .25, 1) both
+}
+
+.story-drawer.is-open .drawer-scroll {
+    animation: modal-content-in .5s .16s cubic-bezier(.2, .75, .25, 1) both
 }
 
 .drawer-top {
@@ -941,21 +1061,80 @@ button {
     white-space: nowrap
 }
 
-@keyframes card-in {
+@keyframes card-image-in {
     from {
         opacity: 0;
-        transform: translate(-50%, -46%)
+        transform: translateY(8px) scale(.98)
     }
 
     to {
         opacity: 1;
-        transform: translate(-50%, -50%)
+        transform: translateY(0) scale(1)
+    }
+}
+
+@keyframes card-caption-in {
+    from {
+        opacity: 0;
+        transform: translateY(5px)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+@keyframes marker-orbit {
+    to {
+        --marker-angle: 360deg
+    }
+}
+
+@keyframes modal-backdrop-in {
+    from { opacity: 0 }
+    to { opacity: 1 }
+}
+
+@keyframes modal-content-in {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(.985)
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1)
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .map-card::before {
+        animation: none
+    }
+
+    .card-image-wrap,
+    .card-meta,
+    .card-title {
+        animation: none
+    }
+
+    .image-lightbox,
+    .image-lightbox > img,
+    .image-lightbox > .lightbox-video,
+    .story-drawer.is-open .drawer-top,
+    .story-drawer.is-open .drawer-scroll {
+        animation: none
+    }
+
+    .story-drawer,
+    .drawer-backdrop {
+        transition: none
     }
 }
 
 @media(max-width:760px) {
     .app-shell {
-        padding: 0 5%
+        padding: 0
     }
 
     .topbar {
@@ -997,9 +1176,14 @@ button {
     }
 
     .map-canvas {
-        height: 520px;
-        min-height: 0;
+        width: min(100vw, 177.7778dvh);
+        height: min(100%, 56.25vw);
+        aspect-ratio: 16 / 9;
         background-position: center
+    }
+
+    .map-toolbar {
+        padding: 0 14px
     }
 
     .map-card {
@@ -1103,7 +1287,9 @@ button {
     }
 
     .map-canvas {
-        height: 460px
+        width: min(100vw, 177.7778dvh);
+        height: min(100%, 56.25vw);
+        aspect-ratio: 16 / 9
     }
 
     .map-card {

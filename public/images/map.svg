@@ -1,1 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700"><defs><pattern id="grid" width="72" height="72" patternUnits="userSpaceOnUse"><path d="M72 0H0V72" fill="none" stroke="#c8cbbd" stroke-width=".7" opacity=".55"/></pattern><pattern id="park" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="3" cy="4" r="1" fill="#8da285" opacity=".35"/><circle cx="10" cy="10" r="1.4" fill="#8da285" opacity=".25"/></pattern></defs><rect width="1200" height="700" fill="#e9e9df"/><path d="M650-60c-14 130 76 152 40 257s-132 126-67 235 17 174 78 292h155c-16-139-83-181-21-292s127-131 61-242 15-170-11-250z" fill="#c4d3cc"/><path d="M650-60c-14 130 76 152 40 257s-132 126-67 235 17 174 78 292" fill="none" stroke="#aec6bc" stroke-width="3" opacity=".8"/><path d="M70 102h355v165H70zm70 335h300v190H140zm737-330h255v200H877zm-25 340h285v170H852z" fill="#d7dfcf"/><path d="M70 102h355v165H70zm70 335h300v190H140zm737-330h255v200H877zm-25 340h285v170H852z" fill="url(#park)"/><g fill="none" stroke="#fbfaf4" stroke-width="9"><path d="M-20 170 1200 550M20 620 1100 35M190-20l110 750M480-30l45 760M860-40l-40 780M-20 330l1220-90"/><path d="M60 90 1110 650M-50 490 1050 40" stroke-width="3"/></g><g fill="none" stroke="#c5c8bd" stroke-width="1"><path d="M0 185 1200 565M0 450 1080 0M210 0l100 700M440 0l70 700M760 0l-22 700M1020 0l-120 700M0 285l1200-140M0 570l1200-350"/></g><g fill="#748475" font-family="monospace" font-size="11" letter-spacing="2"><text x="144" y="185">ЛЕТНИЙ САД</text><text x="220" y="510">ТИХИЙ ПЕРЕУЛОК</text><text x="920" y="160">ПЕТРОГРАДСКАЯ</text><text x="922" y="508">СТАРАЯ НАБЕРЕЖНАЯ</text><text x="718" y="102" transform="rotate(78 718 102)" fill="#78958b">РЕКА</text><text x="725" y="480" transform="rotate(78 725 480)" fill="#78958b">БОЛЬШАЯ НЕВКА</text></g><g fill="#adb5a8"><circle cx="210" cy="300" r="3"/><circle cx="450" cy="135" r="3"/><circle cx="412" cy="390" r="3"/><circle cx="946" cy="302" r="3"/><circle cx="1070" cy="415" r="3"/></g><rect width="1200" height="700" fill="url(#grid)" opacity=".65"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
+  <defs>
+    <pattern id="blocks" width="160" height="140" patternUnits="userSpaceOnUse">
+      <path d="M12 12h126v102H12z" fill="#e7e8dc" stroke="#d8dbcf" stroke-width="2"/>
+      <path d="M24 25h42v30H24zm58 0h44v30H82zm-58 43h44v32H24zm60 0h34v32H84z" fill="#dfe3d6"/>
+    </pattern>
+    <pattern id="trees" width="34" height="36" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="12" r="5" fill="#9caf91"/>
+      <circle cx="25" cy="26" r="6" fill="#a8b99b"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="900" fill="#f1f0e8"/>
+  <path d="M0 0h1600v900H0z" fill="url(#blocks)"/>
+
+  <!-- The river and its embankments form the main geographic axis. -->
+  <path d="M1000-80c-110 170-20 260-150 390s-110 240-250 390-100 210-130 280h440c30-130 70-180 195-305s100-245 220-375 90-245 155-380z" fill="#c8dcd7"/>
+  <path d="M1000-80c-110 170-20 260-150 390s-110 240-250 390-100 210-130 280" stroke="#a9c8c0" stroke-width="5"/>
+  <path d="M1285-80c-65 135-35 250-155 380s-100 245-220 375-165 175-195 305" stroke="#a9c8c0" stroke-width="5"/>
+
+  <!-- Park and garden district. -->
+  <path d="M90 95h490v270H90z" fill="#dce7d4" stroke="#c7d5c0" stroke-width="3"/>
+  <path d="M105 110h460v240H105z" fill="url(#trees)"/>
+  <path d="M105 232h460M328 110v240" stroke="#f4f1e7" stroke-width="12"/>
+  <path d="M120 125h430v210H120z" stroke="#f4f1e7" stroke-width="3" stroke-dasharray="8 10"/>
+  <circle cx="324" cy="231" r="31" fill="#c4d7b9" stroke="#f4f1e7" stroke-width="8"/>
+  <path d="M287 232h74M324 195v74" stroke="#f4f1e7" stroke-width="7"/>
+
+  <!-- Deliberate street grid with a few named avenues. -->
+  <g stroke="#fffdf6" stroke-linecap="round">
+    <path d="M0 410h780M0 560h685M0 735h555M610 0v900M390 0v900M1450 0v900" stroke-width="18"/>
+    <path d="M0 410h780M0 560h685M0 735h555M610 0v900M390 0v900M1450 0v900" stroke="#d4d4c9" stroke-width="2"/>
+    <path d="M0 460h755M0 610h650M0 785h530M660 0v900M440 0v900M1495 0v900" stroke-width="4"/>
+  </g>
+  <path d="M560 0v900M220 0v900M1320 0v900M0 300h800M0 670h590" stroke="#d4d8cc" stroke-width="2" stroke-dasharray="5 8"/>
+
+  <!-- Embankment promenade and a small pier. -->
+  <path d="M745 760c115-130 110-250 250-375s95-225 185-350" stroke="#f6f3e8" stroke-width="18"/>
+  <path d="M745 760c115-130 110-250 250-375s95-225 185-350" stroke="#c7c9bc" stroke-width="2"/>
+  <path d="M800 585l-54-44m83 11-53-46m81 12-52-45" stroke="#b99572" stroke-width="9" stroke-linecap="round"/>
+
+  <!-- Map labels and neighborhood anchors. -->
+  <g fill="#788477" font-family="Arial, sans-serif" font-size="20" font-weight="600" letter-spacing="3">
+    <text x="142" y="160">ЛЕТНИЙ САД</text>
+    <text x="170" y="500">ТИХИЙ ПЕРЕУЛОК</text>
+    <text x="1110" y="165">ПЕТРОГРАДСКАЯ СТОРОНА</text>
+    <text x="1120" y="730">СТАРАЯ НАБЕРЕЖНАЯ</text>
+  </g>
+  <text x="1050" y="500" fill="#6e9b91" font-family="Arial, sans-serif" font-size="20" font-weight="600" letter-spacing="5" transform="rotate(-48 1050 500)">БОЛЬШАЯ НЕВКА</text>
+  <g fill="#8d9789" font-family="monospace" font-size="13" letter-spacing="2">
+    <text x="45" y="55">59°57′ N</text>
+    <text x="1390" y="855">30°19′ E</text>
+  </g>
+  <g fill="#748574">
+    <circle cx="324" cy="231" r="7"/><circle cx="324" cy="231" r="15" stroke="#748574" stroke-width="2" fill="none"/>
+    <circle cx="700" cy="350" r="5"/><circle cx="1480" cy="600" r="5"/>
+  </g>
+  <g transform="translate(1510 70)" stroke="#718071" stroke-width="3" fill="none">
+    <path d="M0 48 18 0l18 48-18-10z" fill="#718071"/>
+    <path d="M18 0v64"/>
+  </g>
+  <text x="1521" y="154" fill="#718071" font-family="monospace" font-size="14" letter-spacing="2">N</text>
+</svg>
