@@ -1,10 +1,132 @@
 {
   "title": "Тихие места",
-  "subtitle": "Карта маленьких открытий · Санкт-Петербург",
+  "subtitle": "Карта маленьких открытий",
   "ImageFonMain": "/images/map.svg",
   "items": [
-    { "id": "greenhouse", "title": "Оранжерея", "category": "САД И РАСТЕНИЯ", "image": "/images/greenhouse.svg", "x": 25, "y": 32, "width": 160, "height": 120, "info": [{ "type": "text", "content": "Маленький тропический мир посреди города.", "style": "lead" }, { "type": "image", "src": "/images/greenhouse.svg", "caption": "Утро в старой оранжерее" }, { "type": "text", "content": "Внутри всегда немного теплее, чем снаружи. На запотевших стёклах собираются капли, а огромные листья тянутся к свету. Здесь приятно замедлиться и просто послушать, как шумят растения." }, { "type": "gallery", "images": [{ "src": "/images/leaf.svg", "caption": "Папоротник" }, { "src": "/images/flowers.svg", "caption": "Цветы в лучах солнца" }, { "src": "/images/greenhouse.svg", "caption": "Тропические растения" }, { "src": "/images/river.svg", "caption": "Отражения на воде" }, { "src": "/images/pier.svg", "caption": "Дорожка в саду" }] }, { "type": "text", "content": "Лучшее время для прогулки — будний день до полудня." }] },
-    { "id": "bookshop", "title": "Книжная лавка", "category": "КНИГИ И КОФЕ", "image": "/images/bookshop.svg", "x": 66, "y": 24, "width": 150, "height": 112, "info": [{ "type": "text", "content": "Книги с историей и кофе, который не торопит.", "style": "lead" }, { "type": "text", "content": "На полках соседствуют старые путеводители, поэзия и открытки из других городов. Хозяин лавки помнит, какую книгу кому посоветовал, а у окна всегда найдётся свободный столик." }, { "type": "image", "src": "/images/bookshop.svg", "caption": "Любимое место у окна" }, { "type": "text", "content": "Возьмите с собой книгу — здесь её можно обменять на другую." }] },
-    { "id": "pier", "title": "Старый причал", "category": "ВОДА И ВЕТЕР", "image": "/images/pier.svg", "x": 49, "y": 65, "width": 176, "height": 126, "info": [{ "type": "text", "content": "Вода, широкое небо и несколько минут тишины.", "style": "lead" }, { "type": "image", "src": "/images/pier.svg", "caption": "Причал в мягком вечернем свете" }, { "type": "text", "content": "Сюда приходят смотреть на закат и провожать медленные речные трамвайчики. Деревянные доски поскрипывают под ногами, а ветер приносит запах воды и дальних путешествий.", "style": "quote" }, { "type": "gallery", "images": [{ "src": "/images/river.svg", "caption": "Река на закате" }, { "src": "/images/pier.svg", "caption": "Дорога к воде" }] }] }
+    {
+      "id": "greenhouse",
+      "title": "Оранжерея",
+      "category": "САД И РАСТЕНИЯ",
+      "image": "/images/greenhouse.svg",
+      "x": 25,
+      "y": 32,
+      "width": 160,
+      "height": 120,
+      "info": [
+        {
+          "type": "text",
+          "content": "Маленький тропический мир посреди города.",
+          "style": "lead"
+        },
+        {
+          "type": "image",
+          "src": "/images/greenhouse.svg",
+          "caption": "Утро в старой оранжерее"
+        },
+        {
+          "type": "text",
+          "content": "Внутри всегда немного теплее, чем снаружи. На запотевших стёклах собираются капли, а огромные листья тянутся к свету. Здесь приятно замедлиться и просто послушать, как шумят растения."
+        },
+        {
+          "type": "gallery",
+          "images": [
+            {
+              "src": "/images/leaf.svg",
+              "caption": "Папоротник"
+            },
+            {
+              "src": "/images/flowers.svg",
+              "caption": "Цветы в лучах солнца"
+            },
+            {
+              "src": "/images/greenhouse.svg",
+              "caption": "Тропические растения"
+            },
+            {
+              "src": "/images/river.svg",
+              "caption": "Отражения на воде"
+            },
+            {
+              "src": "/images/pier.svg",
+              "caption": "Дорожка в саду"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Лучшее время для прогулки — будний день до полудня."
+        }
+      ]
+    },
+    {
+      "id": "bookshop",
+      "title": "Книжная лавка",
+      "category": "КНИГИ И КОФЕ",
+      "image": "/images/bookshop.svg",
+      "x": 66,
+      "y": 24,
+      "width": 150,
+      "height": 112,
+      "info": [
+        {
+          "type": "text",
+          "content": "Книги с историей и кофе, который не торопит.",
+          "style": "lead"
+        },
+        {
+          "type": "text",
+          "content": "На полках соседствуют старые путеводители, поэзия и открытки из других городов. Хозяин лавки помнит, какую книгу кому посоветовал, а у окна всегда найдётся свободный столик."
+        },
+        {
+          "type": "image",
+          "src": "/images/bookshop.svg",
+          "caption": "Любимое место у окна"
+        },
+        {
+          "type": "text",
+          "content": "Возьмите с собой книгу — здесь её можно обменять на другую."
+        }
+      ]
+    },
+    {
+      "id": "pier",
+      "title": "Старый причал",
+      "category": "ВОДА И ВЕТЕР",
+      "image": "/images/pier.svg",
+      "x": 49,
+      "y": 65,
+      "width": 176,
+      "height": 126,
+      "info": [
+        {
+          "type": "text",
+          "content": "Вода, широкое небо и несколько минут тишины.",
+          "style": "lead"
+        },
+        {
+          "type": "image",
+          "src": "/images/pier.svg",
+          "caption": "Причал в мягком вечернем свете"
+        },
+        {
+          "type": "text",
+          "content": "Сюда приходят смотреть на закат и провожать медленные речные трамвайчики. Деревянные доски поскрипывают под ногами, а ветер приносит запах воды и дальних путешествий.",
+          "style": "quote"
+        },
+        {
+          "type": "gallery",
+          "images": [
+            {
+              "src": "/images/river.svg",
+              "caption": "Река на закате"
+            },
+            {
+              "src": "/images/pier.svg",
+              "caption": "Дорога к воде"
+            }
+          ]
+        }
+      ]
+    }
   ]
 }

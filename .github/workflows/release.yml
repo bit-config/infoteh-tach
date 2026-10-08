@@ -1,57 +1,72 @@
-name: Build and publish
+name: Publish Windows release
 
 on:
   push:
-    tags:
-      - "v*"
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  publish-tauri:
+  publish:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
+
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
+
       - name: Install frontend dependencies
         run: npm ci
-      - name: Generate platform icons
-        run: npx tauri icon src-tauri/icons/icon.svg
-      - name: Configure private updater access
-        shell: pwsh
+
+      - name: Set unique release version
+        shell: bash
         env:
-          UPDATER_GITHUB_TOKEN: ${{ secrets.UPDATER_GITHUB_TOKEN }}
+          APP_VERSION: 0.1.${{ github.run_number }}
         run: |
-          if ([string]::IsNullOrWhiteSpace($env:UPDATER_GITHUB_TOKEN)) { throw "Add the UPDATER_GITHUB_TOKEN Actions secret before building." }
-          $configPath = "src-tauri/tauri.conf.json"
-          $config = Get-Content $configPath -Raw | ConvertFrom-Json
-          $endpoint = $config.plugins.updater.endpoints[0]
-          $endpoint.headers.Authorization = "Bearer $env:UPDATER_GITHUB_TOKEN"
-          $config | ConvertTo-Json -Depth 100 | Set-Content $configPath -Encoding utf8
-      - name: Build and publish release
+          node -e 'const fs=require("node:fs"); const version=process.env.APP_VERSION; const configPath="src-tauri/tauri.conf.json"; const config=JSON.parse(fs.readFileSync(configPath,"utf8")); config.version=version; fs.writeFileSync(configPath, JSON.stringify(config,null,2)+"\n"); const cargoPath="src-tauri/Cargo.toml"; const cargo=fs.readFileSync(cargoPath,"utf8").replace(/^(version\s*=\s*)"[^"]+"/m, `$1"${version}"`); fs.writeFileSync(cargoPath,cargo);'
+
+      - name: Check updater signing secret
+        shell: bash
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+        run: |
+          if [ -z "$TAURI_SIGNING_PRIVATE_KEY" ]; then
+            echo "Add TAURI_SIGNING_PRIVATE_KEY to repository Actions secrets."
+            exit 1
+          fi
+
+      - name: Build and publish signed release
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
-          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
-          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
-          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-          APPLE_SIGNING_IDENTITY_PASSWORD: ${{ secrets.APPLE_SIGNING_IDENTITY_PASSWORD }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         with:
-          tagName: ${{ github.ref_name }}
-          releaseName: "Atlas ${{ github.ref_name }}"
-          releaseBody: "Новая версия Atlas. Установщики и подписанные файлы обновления приложены ниже."
-          releaseDraft: true
+          tagName: v0.1.${{ github.run_number }}
+          releaseName: Atlas 0.1.${{ github.run_number }}
+          releaseBody: "Автоматическая сборка Atlas из коммита ${{ github.sha }}."
+          releaseDraft: false
           prerelease: false
-          args: ""
+
+      - name: Keep only the three latest releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          gh api --paginate "repos/${GITHUB_REPOSITORY}/releases?per_page=100" \
+            --jq '.[] | select(.draft == false and .prerelease == false and (.tag_name | startswith("v0.1."))) | [.id, .tag_name, .created_at] | @tsv' \
+            | sort -k3,3r \
+            | tail -n +4 \
+            | while IFS=$'\t' read -r release_id tag_name created_at; do
+                gh api --method DELETE "repos/${GITHUB_REPOSITORY}/releases/${release_id}"
+                gh api --method DELETE "repos/${GITHUB_REPOSITORY}/git/refs/tags/${tag_name}"
+              done

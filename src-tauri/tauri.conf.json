@@ -46,12 +46,12 @@
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDE4ODNEQzc4N0I1Rjg1NUQKUldSZGhWOTdlTnlER0tqYXZpN04yRGpqL1JoWEVWeWVSRFdiWnRmY2xMc0NCckpjWjgrZ3RYWEoK",
       "endpoints": [
         {
-          "url": "https://github.com/REPLACE_OWNER/REPLACE_REPO/releases/latest/download/latest.json",
-          "headers": {
-            "Authorization": "Bearer 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"
-          }
+          "url": "https://github.com/bit-config/infoteh-tach/releases/latest/download/latest.json"
         }
-      ]
+      ],
+      "windows": {
+        "installMode": "quiet"
+      }
     }
   }
 }
