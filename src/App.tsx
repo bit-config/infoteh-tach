@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import { check } from "@tauri-apps/plugin-updater";
 import { relaunch } from "@tauri-apps/plugin-process";
-import { error as logError, info as logInfo } from "@tauri-apps/plugin-log";
+import { error as logError } from "@tauri-apps/plugin-log";
 import { ArrowUpRight, MapPin, Play, Search, X } from "lucide-react";
 import mapData from "./data/map.json";
 import type { MapData, MapItem, StoryBlock } from "./types";
 
 const data = mapData as MapData;
 const imageExtensions = ["svg", "png", "jpg", "jpeg", "webp"];
-const updateToken = import.meta.env.VITE_GITHUB_UPDATE_TOKEN;
-
 function getImageCandidates(src: string) {
   const match = src.match(/^(.*)\.(svg|png|jpe?g|webp)([?#].*)?$/i);
   if (!match) return [src];
@@ -49,23 +47,19 @@ function App() {
     let disposed = false;
     let checking = false;
 
-    void logInfo(`Updater diagnostics: token configured=${Boolean(updateToken)}`)
-      .catch((error) => console.error("Не удалось записать диагностику обновления:", error));
-
     const checkForUpdates = async () => {
       if (checking || disposed) return;
       checking = true;
       try {
-        const headers = updateToken ? { Authorization: `Bearer ${updateToken}` } : undefined;
-        const update = await check(headers ? { headers } : undefined);
+        const update = await check();
         if (!update || disposed) return;
-        await update.downloadAndInstall(undefined, headers ? { headers } : undefined);
+        await update.downloadAndInstall();
         if (!disposed) await relaunch();
       } catch (error) {
         console.error("Не удалось проверить или установить обновление:", error);
         const details = error instanceof Error ? error.stack ?? error.message : String(error);
         try {
-          await logError(`Не удалось проверить или установить обновление (token configured=${Boolean(updateToken)}): ${details}`);
+          await logError(`Не удалось проверить или установить обновление: ${details}`);
         } catch (logFailure) {
           console.error("Не удалось записать ошибку обновления в файл:", logFailure);
         }
