@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { check } from "@tauri-apps/plugin-updater";
 import { relaunch } from "@tauri-apps/plugin-process";
-import { error as logError } from "@tauri-apps/plugin-log";
+import { error as logError, info as logInfo } from "@tauri-apps/plugin-log";
 import { ArrowUpRight, MapPin, Play, Search, X } from "lucide-react";
 import mapData from "./data/map.json";
 import type { MapData, MapItem, StoryBlock } from "./types";
@@ -53,8 +53,10 @@ function App() {
       try {
         const update = await check();
         if (!update || disposed) return;
+        await logInfo(`Updater: found version ${update.version}`).catch(console.error);
         await update.downloadAndInstall();
-        if (!disposed) await relaunch();
+        await logInfo(`Updater: version ${update.version} installed; relaunching`).catch(console.error);
+        await relaunch();
       } catch (error) {
         console.error("Не удалось проверить или установить обновление:", error);
         const details = error instanceof Error ? error.stack ?? error.message : String(error);
