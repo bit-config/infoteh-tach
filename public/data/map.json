@@ -68,8 +68,8 @@
       "title": "Книжная лавка",
       "category": "КНИГИ И КОФЕ",
       "image": "/images/bookshop.svg",
-      "x": 66,
-      "y": 24,
+      "x": 16,
+      "y": 64,
       "width": 150,
       "height": 112,
       "info": [
