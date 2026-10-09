@@ -54,7 +54,14 @@ function App() {
         const update = await check();
         if (!update || disposed) return;
         await logInfo(`Updater: found version ${update.version}`).catch(console.error);
-        await update.downloadAndInstall();
+        await update.downloadAndInstall((event) => {
+          if (event.event === "Started") {
+            const size = event.data.contentLength;
+            void logInfo(`Updater: download started${size ? ` (${size} bytes)` : ""}`).catch(console.error);
+          } else if (event.event === "Finished") {
+            void logInfo("Updater: download finished; launching installer").catch(console.error);
+          }
+        });
         await logInfo(`Updater: version ${update.version} installed; relaunching`).catch(console.error);
         await relaunch();
       } catch (error) {
