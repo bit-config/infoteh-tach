@@ -49,7 +49,7 @@
         "https://github.com/bit-config/infoteh-tach/releases/latest/download/latest.json"
       ],
       "windows": {
-        "installMode": "passive"
+        "installMode": "quiet"
       }
     }
   }
